@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -36,3 +36,27 @@ jobs:
         with:
           name: Tethering-v1.0.9
           path: Receiver/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Prepare release APKs
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cp Host/app/build/outputs/apk/debug/app-debug.apk Phone-Master-v1.0.14.apk
+          cp Receiver/app/build/outputs/apk/debug/app-debug.apk Tethering-v1.0.9.apk
+
+      - name: Publish v1.0 release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0
+          name: Bluetooth Tethering Companion v1.0
+          body: |
+            First public release of Bluetooth Tethering Companion.
+
+            Includes:
+            - Phone Master v1.0.14 — host-side Bluetooth tethering automation.
+            - Tethering v1.0.9 — receiver-side connection and internet-status monitor.
+
+            Read the repository README before installation, especially the XOS background settings, Modify system settings permission, optional Bluetooth icon-hiding ADB grant, and Termux:Boot fallback.
+          files: |
+            Phone-Master-v1.0.14.apk
+            Tethering-v1.0.9.apk
