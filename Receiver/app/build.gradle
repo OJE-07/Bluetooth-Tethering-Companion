@@ -1,0 +1,14 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.decoy.internetwatch'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.decoy.internetwatch'
+        minSdk 24
+        targetSdk 25
+        versionCode 10
+        versionName '1.0.9'
+    }
+}

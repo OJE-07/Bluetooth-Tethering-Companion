@@ -1,0 +1,60 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+        android:label="Tethering"
+        android:allowBackup="false"
+        android:supportsRtl="true">
+
+        <!-- No MAIN/LAUNCHER filter: remains absent from the app drawer.
+             Invoked explicitly once by ADB to bootstrap the monitor on XOS. -->
+        <activity
+            android:name=".SetupActivity"
+            android:exported="true"
+            android:excludeFromRecents="false"
+            android:noHistory="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Invisible entry point used by Termux:Boot; it starts the service without
+             creating a visible screen or Recents card. -->
+        <activity
+            android:name=".HeadlessStartActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <!-- Monitoring service. -->
+        <service
+            android:name=".InternetWatchService"
+            android:exported="false" />
+
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Headless ADB/Termux entry point for initial start and diagnostics. -->
+        <receiver
+            android:name=".StartReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.decoy.internetwatch.START" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
