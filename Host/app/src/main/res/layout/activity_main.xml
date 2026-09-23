@@ -1,0 +1,49 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#FAFAFA" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Decoy" android:textSize="30sp" android:textStyle="bold" android:textColor="#202124"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Bluetooth tethering automation" android:textSize="14sp" android:textColor="#777777"
+            android:layout_marginBottom="22dp"/>
+
+        <Switch android:id="@+id/automation_switch" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Automatic Bluetooth tethering"
+            android:textSize="17sp" android:textColor="#202124" android:paddingBottom="14dp"/>
+        <Switch android:id="@+id/hide_icon_switch" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Hide Bluetooth status icon"
+            android:textSize="17sp" android:textColor="#202124" android:paddingBottom="22dp"/>
+
+        <TextView android:id="@+id/mobile_data_status" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:textSize="16sp" android:textColor="#444444" android:paddingBottom="8dp"/>
+        <TextView android:id="@+id/bluetooth_status" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:textSize="16sp" android:textColor="#444444" android:paddingBottom="8dp"/>
+        <TextView android:id="@+id/tethering_status" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:textSize="16sp" android:textColor="#444444" android:paddingBottom="18dp"/>
+
+        <TextView android:id="@+id/write_settings_status" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:textSize="14sp" android:textColor="#777777" android:paddingBottom="8dp"/>
+        <Button android:id="@+id/write_settings_button" android:layout_width="match_parent"
+            android:layout_height="48dp" android:text="ALLOW SYSTEM SETTINGS ACCESS"
+            android:textColor="#202124" android:background="#FFFFFF"/>
+
+        <TextView android:id="@+id/last_action" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#777777"
+            android:gravity="center" android:layout_marginTop="20dp"/>
+
+        <Space android:layout_width="match_parent" android:layout_height="28dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center" android:textColor="#AAAAAA" android:textSize="10sp"
+            android:textIsSelectable="true"
+            android:text="One-time ADB permission for Bluetooth icon hiding"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center" android:textColor="#AAAAAA" android:textSize="9sp"
+            android:textIsSelectable="true"
+            android:fontFamily="monospace"
+            android:text="Grant: adb shell pm grant com.decoy android.permission.WRITE_SECURE_SETTINGS&#10;Check: adb shell dumpsys package com.decoy | findstr WRITE_SECURE_SETTINGS"/>
+    </LinearLayout>
+</ScrollView>
