@@ -1,0 +1,41 @@
+name: Build Android APKs
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '8.13'
+      - name: Build Phone Master
+        working-directory: Host
+        run: gradle assembleDebug --no-daemon
+      - name: Build Tethering
+        working-directory: Receiver
+        run: gradle assembleDebug --no-daemon
+      - name: Upload Phone Master APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Phone-Master-v1.0.14
+          path: Host/app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload Tethering APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tethering-v1.0.9
+          path: Receiver/app/build/outputs/apk/debug/app-debug.apk

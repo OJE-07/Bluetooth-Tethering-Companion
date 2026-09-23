@@ -1,0 +1,22 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.decoy'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.decoy'
+        minSdk 24
+        // Keep the legacy target used by the successful Android 9/XOS probe.
+        // This is a sideloaded device-specific build, not a Play Store target.
+        targetSdk 25
+        versionCode 15
+        versionName '1.0.14'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
